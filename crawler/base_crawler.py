@@ -1,0 +1,3 @@
+
+class BaseCrawler():
+    pass
