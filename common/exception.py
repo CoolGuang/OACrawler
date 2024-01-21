@@ -32,3 +32,13 @@ class ModelColumnKeyInitNoEqual(OABaseException):
 
     def get_code(self):
         return self.code
+
+
+class CrawlerParamTypeError(OABaseException):
+    def __init__(self, msg:str, code=-1) -> None:
+        super(CrawlerParamTypeError, self).__init__(msg)
+        self.code = code
+
+    def get_code(self):
+        return self.code
+

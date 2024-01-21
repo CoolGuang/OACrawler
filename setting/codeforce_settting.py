@@ -1,12 +1,13 @@
-from base_setting import BaseSettingProtocol
+from setting.base_setting import BaseSettingProtocol, BaseSetting
 
 
-class CodeForceProFileSetting(BaseSettingProtocol):
+class CodeForceProFileSetting(BaseSetting):
     """
         return a codeforce crawler profile setting
     """
     URL = {
-        "profile": "https://codeforces.com/profile/"
+        "profile": "https://codeforces.com/profile/",
+        "contest": "https://codeforces.com/contests/with/"
     }
 
     TYPE_KEYS = [
