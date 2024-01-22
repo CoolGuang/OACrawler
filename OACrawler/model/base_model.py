@@ -2,8 +2,9 @@ import copy
 import datetime
 import json
 from typing import Protocol, Union, List, Any
-from common.exception import ModelColumnNotFoundError, ModelColumnKeyNotInit, ModelColumnKeyInitNoEqual
-from setting.base_setting import BaseSetting
+
+from ..common.exception import ModelColumnNotFoundError, ModelColumnKeyNotInit, ModelColumnKeyInitNoEqual
+from ..setting.base_setting import BaseSetting
 
 
 class ModelProtocol(Protocol):

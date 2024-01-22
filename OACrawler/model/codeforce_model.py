@@ -1,7 +1,8 @@
-from model.base_model import BaseModel
 from typing import List
-from setting.codeforce_settting import CodeForceProFileSetting
-from common.const import DEFAULT_TIME, NO_CONTEST
+
+from .base_model import BaseModel
+from ..setting.codeforce_settting import CodeForceProFileSetting
+from ..common.const import DEFAULT_TIME, NO_CONTEST
 
 
 class CodeForceProFileModel(BaseModel):

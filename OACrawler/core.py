@@ -1,11 +1,10 @@
 import asyncio
-import os
-os.path.join("../*")
 from typing import List, Union
-from crawler.codeforce_crawler import CodeForceProFileCrawler
-from crawler.base_crawler import CrawlerConfig
-from model.base_model import BaseModel
-from model.codeforce_model import CodeForceProFileModel
+
+from .crawler.codeforce_crawler import CodeForceProFileCrawler
+from .crawler.base_crawler import CrawlerConfig
+from .model.base_model import BaseModel
+from .model.codeforce_model import CodeForceProFileModel
 
 
 async def _get_code_force_profile_info_async(

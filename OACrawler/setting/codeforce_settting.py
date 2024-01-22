@@ -1,4 +1,4 @@
-from setting.base_setting import BaseSetting
+from ..setting.base_setting import BaseSetting
 
 
 class CodeForceProFileSetting(BaseSetting):

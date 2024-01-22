@@ -1,10 +1,11 @@
 import asyncio
 import datetime
 from typing import Dict, List, Union
-from crawler.base_crawler import CrawlerBase, CrawlerConfig
-from setting.codeforce_settting import CodeForceProFileSetting
 from bs4 import BeautifulSoup
-from common.const import KEY_PROFILE, KEY_CONTEST
+
+from .base_crawler import CrawlerBase, CrawlerConfig
+from ..setting.codeforce_settting import CodeForceProFileSetting
+from ..common.const import KEY_PROFILE, KEY_CONTEST
 
 
 class CodeForceProFileCrawler(CrawlerBase):

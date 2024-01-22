@@ -2,9 +2,10 @@ import asyncio
 import random
 from typing import Dict, List
 import requests
-from common.headers import get_random_headers
-from setting.base_setting import BaseSetting
-from common.exception import CrawlerParamTypeError
+
+from ..common.headers import get_random_headers
+from ..setting.base_setting import BaseSetting
+from ..common.exception import CrawlerParamTypeError
 
 
 class CrawlerConfig():

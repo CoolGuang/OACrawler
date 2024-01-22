@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='OACrawler',
-    version='1.2.1',
+    version='1.4.0',
     description='crawler oa(oi, acm) competition info',
     long_description=open('README.md').read(),
     url='https://github.com/CoolGuang/OACrawler',
