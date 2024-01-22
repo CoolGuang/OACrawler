@@ -77,6 +77,10 @@ class BaseModel(ModelProtocol):
             c = str(c)
         elif isinstance(c, datetime.datetime):
             c = c.strftime("%Y-%m-%dT%H:%M:%S")
+        elif isinstance(c, str):
+            return c
+        elif isinstance(c, tuple):
+            return tuple([self.ch_2_s(_c) for _c in c])
         else:
             raise TypeError("not exclude type %s" % type(c))
         return c
