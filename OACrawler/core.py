@@ -8,7 +8,7 @@ from model.base_model import BaseModel
 from model.codeforce_model import CodeForceProFileModel
 
 
-async def _get_code_force_profile_info(
+async def _get_code_force_profile_info_async(
         usernames: List[str],
         crawler_cfg: CrawlerConfig = CrawlerConfig
 ) -> Union[BaseModel, List[BaseModel]]:
@@ -29,15 +29,16 @@ async def _get_code_force_profile_info(
 
         gather_fortune = asyncio.gather(
             *[
-                c.execute_tasks(username, crawler_cfg=crawler_cfg) for username in _usernames
+                c.execute_tasks([username], crawler_cfg=crawler_cfg) for username in _usernames
             ]
         )
 
         _result = await gather_fortune
 
         result = []
-        for kwargs in _result:
-            result.append(CodeForceProFileModel(**kwargs))
+        for item in _result:
+            for kwargs in item:
+                result.append(CodeForceProFileModel(**kwargs))
 
         if r_flag:
             yield result
@@ -45,19 +46,35 @@ async def _get_code_force_profile_info(
             yield result[0]
 
 
-def get_code_force_profile_info(
+async def get_code_force_profile_info_async(
         usernames: List[str],
         crawler_cfg: CrawlerConfig = CrawlerConfig
 ) -> Union[BaseModel, List[BaseModel]]:
 
-    yield asyncio.run(_get_code_force_profile_info(usernames))
+    result = []
+    async for item in _get_code_force_profile_info_async(usernames, crawler_cfg=crawler_cfg):
+        result.append(item)
+
+    return result
+
+
+def get_code_force_profile_info(
+    usernames: List[str],
+    crawler_cfg: CrawlerConfig = CrawlerConfig
+) -> BaseModel:
+    r = asyncio.run(get_code_force_profile_info_async(usernames, crawler_cfg=crawler_cfg))
+    for r_profile in r:
+        for r in r_profile:
+            yield r
 
 
 if __name__ == '__main__':
-
-    for item in get_code_force_profile_info(["CCoolGuang", "CCoolGuang", "CCoolGuang"]):
-        async for t in item:
-            print(t)
+    # for test
+    for item in get_code_force_profile_info(["CCoolGuang"]):
+        print(item.username)
+        print(item.get_columns_name())
+        print(item.get_dict_info())
+        print(item.parse_to_text())
 
 
 

@@ -41,6 +41,7 @@ def get_random_headers() -> dict:
         avoid crawler defense
     :return: a header config
     """
-    return random.choice(HEADERS)
+    return HEADERS[1]
+    # return random.choice(HEADERS)
 
 

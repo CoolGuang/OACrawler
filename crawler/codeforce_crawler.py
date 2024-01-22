@@ -32,7 +32,7 @@ class CodeForceProFileCrawler(CrawlerBase):
         return {
             "max_rating": max_rating,
             "current_rating": current_rating,
-            "last_month_solutions": last_month_solutions,
+            "late_month_solutions": last_month_solutions,
             "solve_problems": solve_problems
         }
 
@@ -69,9 +69,9 @@ class CodeForceProFileCrawler(CrawlerBase):
             last_contests_name.append(contests[1].select_one("a").string.strip('\r\n '))
 
         return {
-            "last_contests_name": last_contests_name,
-            "latest_contests_ratings": latest_contests_ratings,
-            "last_contest_time": last_contest_time
+            "late_contests_name": last_contests_name,
+            "late_contests_ratings": latest_contests_ratings,
+            "late_contests_time": last_contest_time
         }
 
     async def execute_task(
@@ -102,7 +102,7 @@ class CodeForceProFileCrawler(CrawlerBase):
 
         result_list = await gather_fortune
 
-        result = {}
+        result = {"username": username}
         for _result in result_list:
             result.update(_result)
 

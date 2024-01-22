@@ -18,6 +18,9 @@ class CrawlerBase():
 
     SETTING = BaseSetting
 
+    def __init__(self, *args, **kwargs):
+        self.semaphore = asyncio.Semaphore(4)
+
     async def _get_request_body(
         self,
         url_key: str,
@@ -34,33 +37,36 @@ class CrawlerBase():
         :param crawler_config: crawler config 
         :return: request body to crawler
         """""
-        # url
-        await asyncio.sleep(round(random.random(1, 200) / 100.0, 2))
-        url = self._get_url(url_key, directions, query_param)
+        async with self.semaphore:
+            # url
+            await asyncio.sleep(round(random.randint(100, 200) / 100.0, 2))
+            url = self._get_url(url_key, directions, query_param)
 
-        print(url)
+            # config
+            retry_time = crawler_config.MAX_RETRY_TIME
+            timeout = crawler_config.TIMEOUT
 
-        # config
-        retry_time = crawler_config.MAX_RETRY_TIME
-        timeout = crawler_config.TIMEOUT
+            # get body
+            try_time = 0
+            response = None
 
-        # get body
-        try_time = 0
-        response = None
-        while try_time < retry_time and not response:
-            try:
-                response = requests.get(url=url, headers=get_random_headers(), allow_redirects=False, timeout=timeout)
-            except requests.RequestException as e:
-                response = None
-                print("get request err, code=%s" % e.errno)
-            finally:
-                try_time += 1
-            await asyncio.sleep(1)
+            # headers
+            headers = get_random_headers()
 
-        if not response:
-            response.raise_for_status()
+            while try_time < retry_time and not response:
+                try:
+                    response = requests.get(url=url, headers=headers, allow_redirects=False, timeout=timeout)
+                except requests.RequestException as e:
+                    response = None
+                    #todo log print("get request err, code=%s" % e.errno)
+                finally:
+                    try_time += 1
+                await asyncio.sleep(3)
 
-        return response.content.decode("utf-8")
+            if not response:
+                response.raise_for_status()
+
+            return response.content.decode("utf-8")
 
     def _get_url(
         self,
@@ -76,7 +82,7 @@ class CrawlerBase():
             directions = []
 
         if not isinstance(query_param, dict) or not isinstance(directions, list):
-            raise CrawlerParamTypeError("crawler param error, query_param must be dict, diretions must be list")
+            raise CrawlerParamTypeError("crawler param error, query_param must be dict, directions must be list")
 
         url = self.SETTING.URL[url_key]
 
