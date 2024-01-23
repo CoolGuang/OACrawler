@@ -35,5 +35,5 @@ if __name__ == '__main__':
 # 函数映射功能 table
 | 函数名称 | 功能 | 参数列表 | 返回值 |
 | -------- | -------- | -------- | -------- |
-| `get_code_force_profile_info`  | 获取 `codeforce` 个人信息（支持批量）  | `usernames`[用户名列表], 爬取配置  | `profileinfo model`的列表
+| `get_code_force_profile_info`  | 获取 `codeforce` 个人信息（支持批量）  | `usernames`[用户名列表], 爬取配置  | `profileinfo model`的生成器
 
